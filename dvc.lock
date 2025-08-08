@@ -1,0 +1,103 @@
+schema: '2.0'
+stages:
+  data_ingest:
+    cmd: python src/data_ingest.py
+    deps:
+    - path: src/data_ingest.py
+      hash: md5
+      md5: e0c996f45c892a8cd8e427aef9f8eaa6
+      size: 726
+    outs:
+    - path: data/staged/data.csv
+      hash: md5
+      md5: a11a738e86ec33bde2d91010f1dd769e
+      size: 4953230
+  data_validation:
+    cmd: python src/data_validation.py
+    deps:
+    - path: data/staged/data.csv
+      hash: md5
+      md5: a11a738e86ec33bde2d91010f1dd769e
+      size: 4953230
+    - path: src/data_validation.py
+      hash: md5
+      md5: 0d6a0e8f378aac50d93aa5667ad72126
+      size: 914
+    outs:
+    - path: data/staged/validation_report.json
+      hash: md5
+      md5: d21474130f69aa6c1f1db389a10107d9
+      size: 2509
+  train_and_tune:
+    cmd: python src/train_and_tune.py
+    deps:
+    - path: data/staged/data.csv
+      hash: md5
+      md5: a11a738e86ec33bde2d91010f1dd769e
+      size: 4953230
+    - path: src/train_and_tune.py
+      hash: md5
+      md5: d3dc713245f8cc8feb9855b0787a449a
+      size: 3342
+    params:
+      params.yaml:
+        model:
+          type: RandomForestClassifier
+          grid:
+            n_estimators:
+            - 100
+            - 200
+            max_depth:
+            - 8
+            - 12
+            min_samples_split:
+            - 2
+            - 5
+        seed: 42
+        small_run_rows: 2000
+        test_size: 0.2
+    outs:
+    - path: artifacts/columns.json
+      hash: md5
+      md5: 9a1b5f7e8a05f3262d77e4e02e0bd655
+      size: 1225
+    - path: artifacts/feature_info.json
+      hash: md5
+      md5: 93989b2d492108c481c709643dd59343
+      size: 388
+    - path: artifacts/metrics.json
+      hash: md5
+      md5: 973d9e4afb0f03184f82442fbf7602ef
+      size: 210
+    - path: artifacts/model.joblib
+      hash: md5
+      md5: 474d1dd0eab384ad9d0703bb0056a2dc
+      size: 2141583
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: artifacts/columns.json
+      hash: md5
+      md5: 9a1b5f7e8a05f3262d77e4e02e0bd655
+      size: 1225
+    - path: artifacts/model.joblib
+      hash: md5
+      md5: 474d1dd0eab384ad9d0703bb0056a2dc
+      size: 2141583
+    - path: data/staged/data.csv
+      hash: md5
+      md5: a11a738e86ec33bde2d91010f1dd769e
+      size: 4953230
+    - path: src/evaluate.py
+      hash: md5
+      md5: 300c4cfac86cdfdaa6d1d1c7d762cda3
+      size: 1138
+    params:
+      params.yaml:
+        seed: 42
+        test_size: 0.2
+    outs:
+    - path: artifacts/eval_report.json
+      hash: md5
+      md5: 773e21d4053c96b8289c46412241ead0
+      size: 772
