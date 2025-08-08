@@ -1,0 +1,45 @@
+stages:
+  data_ingest:
+    cmd: python src/data_ingest.py
+    deps:
+      - src/data_ingest.py
+    outs:
+      - data/staged/data.csv
+
+  data_validation:
+    cmd: python src/data_validation.py
+    deps:
+      - src/data_validation.py
+      - data/staged/data.csv
+    outs:
+      - data/staged/validation_report.json
+
+  train_and_tune:
+    cmd: python src/train_and_tune.py
+    deps:
+      - src/train_and_tune.py
+      - data/staged/data.csv
+    params:
+      - seed
+      - test_size
+      - small_run_rows
+      - model
+    outs:
+      - artifacts/model.joblib
+      - artifacts/columns.json
+      - artifacts/feature_info.json
+    metrics:
+      - artifacts/metrics.json
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - artifacts/model.joblib
+      - artifacts/columns.json
+      - data/staged/data.csv
+    params:
+      - seed
+      - test_size
+    outs:
+      - artifacts/eval_report.json

@@ -1,0 +1,9 @@
+flowchart LR
+  subgraph Pipeline
+    A[data_ingest] --> B[data_validation] --> C[train_and_tune] --> D[evaluate]
+  end
+  S3[(S3 DVC Remote)] <-->|push/pull| Pipeline
+  Code[GitHub Repo] --> CI[CI (lint/tests/sanity train)] --> CD[CD (build/deploy)]
+  CD --> ECR[ECR]
+  ECR --> SM[SageMaker Endpoint]
+  User -->|/predict| SM

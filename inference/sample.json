@@ -1,0 +1,24 @@
+{
+  "data": {
+    "age": 39,
+    "job": "technician",
+    "marital": "married",
+    "education": "secondary",
+    "default": "no",
+    "housing": "yes",
+    "loan": "no",
+    "contact": "cellular",
+    "month": "aug",
+    "day_of_week": "thu",
+    "duration": 100,
+    "campaign": 1,
+    "pdays": 999,
+    "previous": 0,
+    "poutcome": "nonexistent",
+    "emp.var.rate": 1.1,
+    "cons.price.idx": 93.2,
+    "cons.conf.idx": -36.4,
+    "euribor3m": 4.857,
+    "nr.employed": 5191
+  }
+}

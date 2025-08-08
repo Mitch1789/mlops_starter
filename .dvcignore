@@ -1,0 +1,3 @@
+# Ignore anything temporary not tracked by DVC
+**/__pycache__/
+**/*.tmp
