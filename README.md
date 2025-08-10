@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 # 2) DVC init + S3 remote
 dvc init
-dvc remote add -d s3remote s3://<your-bucket>/mlops-starter
+dvc remote add -d s3remote s3://<my_bucket>/mlops-starter
 # Optional: if using non-default endpoints:
 # dvc remote modify s3remote endpointurl https://s3.<region>.amazonaws.com
 
