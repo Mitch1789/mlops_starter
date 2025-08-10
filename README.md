@@ -74,7 +74,7 @@ The API measures latency and can optionally publish to **CloudWatch** if you set
 - `METRICS_NAMESPACE` (e.g., `MLOpsStarter`)
 - `PUBLISH_CW=1`
 
-## Architecture (Mermaid)
+## Architecture
 
 ```mermaid
 flowchart LR
