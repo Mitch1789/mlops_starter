@@ -115,6 +115,3 @@ project-root/
    ├─ final_report_template.md
    └─ architecture.mmd
 ```
-
-## Final Report
-Use `docs/final_report_template.md` as a starting point, export to PDF.
